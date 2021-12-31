@@ -29,15 +29,19 @@ class MainGUI:
         self.current_sched_task = StringVar()
 
         ttk.Button(self.mainframe, text="Add Schedule", command=self.add_button_event).grid(column=0, row=0, sticky=W)
-        ttk.Button(self.mainframe, text="Delete Schedule", command=self.delete_button_event).grid(column=1, row=0, sticky=E)
+        ttk.Button(self.mainframe, text="Delete Schedule", command=self.delete_button_event).grid(column=2, row=0, sticky=E)
 
         ttk.Label(self.mainframe, text="Available schedules: ").grid(column=0, row=1, sticky=W)
         self.lbox = Listbox(self.mainframe, listvariable=self.schedule_var, selectmode='browse')
-        self.lbox.grid(column=0, row=2, sticky=W)
+        self.lbox.grid(column=0, row=2, sticky=(W,E))
         self.lbox.bind("<Double-1>", lambda e: self.begin_timing())  # exec timing function when schedule is clicked on
 
+        scroll = ttk.Scrollbar(self.mainframe, orient=VERTICAL, command=self.lbox.yview)
+        scroll.grid(column=1, row=2, sticky=(N,S))
+        self.lbox['yscrollcommand'] = scroll.set
+
         for child in self.mainframe.winfo_children():
-            child.grid_configure(padx=5, pady=5)
+            child.grid_configure(padx=0, pady=5)
 
     # The method below is the functionality of this small application
     # It extracts the schedule selected from the listbox and checks it against the current day of the week

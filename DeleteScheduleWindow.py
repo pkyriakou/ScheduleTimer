@@ -29,6 +29,10 @@ class DeleteScheduleWindow(Toplevel):
         self.listbox.grid(column=0, row=1, sticky=W)
         ttk.Button(self.newframe, text="Delete", command=lambda: self.delete_schedule(sched_list)).grid(column=2, row=3, sticky=W)
 
+        scroll = ttk.Scrollbar(self.newframe, orient=VERTICAL, command=self.listbox.yview)
+        scroll.grid(column=1, row=1, sticky=(N,S))
+        self.listbox['yscrollcommand'] = scroll.set
+
     # This method is called when the user clicks on the delete button
     # It gets the schedules that have been selected from the listbox and deletes the txt files that correspond to them
     # It additionally re-writes the "schedule_names.txt" file by exluding the deleted schedule names
